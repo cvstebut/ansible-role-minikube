@@ -8,7 +8,7 @@ The role will install the minikube cluster and fetch the generated KUBECONFIG fi
 Requirements
 ------------
 
-The role uses the k8s* modules.
+The python openshift is needed by the k8s modules.
 
 ### Install openshift python module
 
@@ -41,7 +41,7 @@ Dependencies
 ansible-galaxy collection install chocolatey.chocolatey
 ```
 
-### Install Ansible collection `community.kubernetes` on Ansible controller
+### community.kubernetes
 
 ```console
 ansible-galaxy collection install community.kubernetes
