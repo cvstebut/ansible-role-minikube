@@ -1,9 +1,11 @@
 Role Name
 =========
 
-This Ansible creates a minikube profile (cluster) on a Windows host with the hyperv driver. It will insure that the latest version of minikube is installed on the target using the chocolatey module.
+This Ansible role creates a minikube profile (cluster) on a Windows host with the hyperv driver. It will insure that the latest version of minikube is installed on the target using the chocolatey module.
 
 The role will install the minikube cluster and fetch the generated KUBECONFIG file from the default location on the windows host (%HOMEPATH%/.kube/config). %HOMEPATH% is the home directory of the user used to connect to the windows host. The fetched file will then be stored on the Ansible controller (localhost) and can be utilized for further configuration.
+
+CAUTION: Minikube merges the access information of the created profile into the current KUBECONFIG file of the user creating the cluster. Thus, the fetched file will likely not just contain the access information of the created minikube cluster, but will likely contain access information to all clusters configured on the target system. Keep file secure!
 
 Requirements
 ------------
