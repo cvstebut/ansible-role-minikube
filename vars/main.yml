@@ -1,2 +1,18 @@
 ---
 # vars file for ansible-role-minikube
+kubeconfig_folder: /home/ansible/.ci/kubeconfig
+
+
+minikube_dry_run: false
+minikube_embed_certs: true
+minikube_profile: minikube04
+minikube_cpus: 3   # 
+minikube_memory: "5g"  # b k m g
+minikube_disk_size: "25000mb"
+minikube_driver: hyperv
+minikube_hyperv_virtual_switch: internalLAN
+  # For list of feature gates see:
+  # https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/
+  #feature-gates:
+  #  AppArmor: true
+  #  CPUManager: false

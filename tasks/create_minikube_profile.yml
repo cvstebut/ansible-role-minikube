@@ -1,0 +1,52 @@
+- name: check for existence of minikube cluster {{ minikube_profile}}
+  win_command: "minikube status -p {{ minikube_profile}} --output=text"
+  register: minikube_out
+  changed_when: false
+  ignore_errors: true
+
+
+- name: Get profile name from minikube status
+  set_fact:
+    minikube_profile_exists: "{{ not 'There is no local cluster named' in minikube_out.stdout_lines[0] }}"
+
+- name: Create minikube cluster
+  block:
+    - name: Creating minikube cluster {{ minikube_profile }} ...
+      set_fact:
+        cmdline: "minikube start -p {{ minikube_profile }}"
+
+    - set_fact:
+        cmdline: "{{ cmdline }} --cpus={{ minikube_cpus }}"
+      when: minikube_cpus is defined
+
+    - set_fact:
+        cmdline: "{{ cmdline }} --memory={{ minikube_memory }}"
+      when: minikube_memory is defined
+
+    - set_fact:
+        cmdline: "{{ cmdline }} --embed-certs={{ minikube_embed_certs }}"
+      when: minikube_embed_certs is defined
+
+    - set_fact:
+        cmdline: "{{ cmdline }} --driver={{ minikube_driver }}"
+      when: minikube_driver is defined
+
+    - set_fact:
+        cmdline: "{{ cmdline }} --hyperv-virtual-switch={{ minikube_hyperv_virtual_switch }}"
+      when: minikube_hyperv_virtual_switch is defined
+
+    - set_fact:
+        cmdline: "{{ cmdline }} --dry-run"
+      when: minikube_dry_run
+      
+    - debug:
+        msg: "{{ cmdline }}"
+
+    - name: Executing assembled cmdline
+      win_command: "{{ cmdline }}"
+      register: minikube_create
+
+    - debug:
+        msg: "{{ minikube_create.stdout}}"
+
+  when: not minikube_profile_exists

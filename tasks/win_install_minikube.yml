@@ -1,0 +1,5 @@
+- name: Install minikube using chocolatey
+  win_chocolatey:
+    name: minikube
+    state: latest
+

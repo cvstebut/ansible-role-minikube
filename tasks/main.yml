@@ -1,2 +1,11 @@
 ---
 # tasks file for ansible-role-minikube
+- name: Install minikube on target
+  include_tasks: 'win_install_minikube.yml'
+
+- name: Create minikube profile on target
+  include_tasks: create_minikube_profile.yml
+
+- name: Fetch kubeconfig from target to localhost
+  include_tasks: win_fetch_kubeconfig.yml
+
